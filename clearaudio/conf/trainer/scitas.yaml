@@ -1,0 +1,7 @@
+defaults:
+  - base_trainer
+
+name: clearaudio
+type: wavenet
+platform: slurm
+results_dir: /work/vita/datasets/audio/maestro/results

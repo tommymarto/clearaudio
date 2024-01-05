@@ -1,0 +1,122 @@
+defaults:
+  - base_trainer
+
+name: maestro_wavenet_scitas
+type: wavenet
+platform: slurm
+results_dir: /work/vita/datasets/audio/maestro/results
+
+# General
+verbose: true 
+use_clearml: true
+use_wandb: false
+per_epoch: true 
+ml_exp_name: MishPostnet_Decoder
+test_grad: false
+mixed_precision: false
+log_gradient_frequency: 1000
+
+# Data parameters
+training_perc: 0.8
+validation_perc: 0.0
+train_clip_duration: 3
+test_clip_duration: 4
+validation_clip_duration: 3
+
+#Training parameters
+num_epoch: 25
+epoch_len: 10000
+eval_epoch_len: 1000
+batch_size: 1
+lr: 1e-4
+grad_clip: 3.
+lr_decay: 0.94
+mu_law: false
+linear_pcm: false 
+classes: 1
+shift_right: false 
+autoencoding: 0
+latent_d: 128
+
+# Training parameters when using Mixture of Logistics
+mol:
+  active: true
+  n_mols: 12
+  n_classes: 2048
+  num_classes_decay: 1.1
+
+# Encoder
+encoder:
+  active: false
+  channels: 128
+  blocks: 4
+  pool: 100
+  final_kernel_size: 1
+  layers: 11
+  activation: 'mish' #'lrelu', 'relu','tanh','swish','mish', 'glu'
+
+# Decoder
+decoder:
+  blocks: 4
+  layers: 12
+  kernel_size: 3
+  residual_channels: 128
+  skip_channels: 128
+  layer_activation: 'original' # can be 'original' OR any of 'lrelu', 'relu','tanh','swish','mish' combination as in 'lrelu, tanh, tanh' 
+  last_activation: 'mish' # 'lrelu', 'relu','tanh','swish','mish'
+  batch_norm_active: true
+  neg_slope_lrelu: 0.01
+  causal: false
+  lambda_waveform: 100
+
+# Decoder Melspec
+melspec:
+  active: true
+  lambda_mel: 0.1
+  scale_melspec: false
+  multiple_stft: true 
+  stable: true
+  use_db: true
+  log_scale: false
+  loss: "mix" #"mix" "l1", "mix"
+
+#Discriminator Latent
+discriminator_latent:
+  active: false
+  layers: 3
+  channels: 100
+  p_dropout_discriminator: 0.0 
+  lambda_d: 1e-2
+
+#PostNet
+postnet:
+  active: true
+  n_steps_before_activation: 1
+  input_dim: 1 # 1 if mono 2 if stereo
+  output_dim: 1 # 1 if mono 2 if stereo
+  n_layers: 12
+  n_channels: 64 
+  kernel_size: 65
+  stride: 1
+  activation: "mish" # "relu", 'lrelu', 'tanh', 'mish', 'swish'
+  dropout_rate: 0.1
+  push_back_gradients: true
+  lambda_waveform: 1
+  lambda_post: 1.
+  grad_clip: 3.
+  tanh_loss_active: false
+  neg_slope_lrelu: 0.1
+#Sampling
+sample_max: false
+
+# Mode slurm
+slurm:
+  nodes: 2 # 2
+  gpus_per_node: 2  # max 2
+  cpus_per_task: 8
+  mem: 0 # in GiB 48
+  timeout: 72 # hours
+  partition: gpu
+  qos: gpu
+  account: vita
+  reservation: VITA

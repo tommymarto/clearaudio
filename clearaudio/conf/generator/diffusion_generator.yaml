@@ -1,0 +1,19 @@
+defaults:
+  - base_generator
+
+log_dir: /work/vita/martorel/diffusion/yes_no/generator
+# checkpointpath: /work/vita/martorel/diffusion/yes_no/logs/openai-2024-01-02-20-33-53-081557/ema_0.9999_208000.pt
+# checkpointpath: /work/vita/martorel/diffusion/yes_no/logs/openai-2023-10-28-16-07-42-057402/ema_0.9999_414000.pt
+checkpointpath: /work/vita/martorel/diffusion/yes_no/logs/openai-2023-10-31-22-28-12-037611/ema_0.9999_827000.pt
+# checkpointpath: /work/vita/martorel/diffusion/yes_no/logs/openai-2024-01-04-10-13-23-364924/ema_0.9999_004000.pt
+
+
+num_samples: 1
+
+sampler:
+  use_ddim: true
+  timestep_respacing: "ddim250"
+
+reverse_loop: false
+# reverse_loop_image: "/home/martorel/dev/data/inversion/guided_diffusion/maestro/250 steps/starting_image.npy"
+# starting_noise: "/home/martorel/dev/data/inversion/guided_diffusion/maestro/250 steps/initial_noise.npy"

@@ -1,0 +1,142 @@
+defaults:
+  - base_trainer
+
+name: tan_vqvae_scitas
+type: vqvae
+platform: slurm
+results_dir: /work/vita/datasets/audio/tan/results
+
+# General
+verbose: true 
+per_epoch: true
+use_clearml: true 
+use_wandb: false
+ml_exp_name: Tan_VQ1
+test_grad: false
+mixed_precision: true
+
+# Data parameters
+training_perc: 0.9
+validation_perc: 0.0
+train_clip_duration: 4
+test_clip_duration: 4
+validation_clip_duration: 4
+timesteps: 131072 # Must be a 2**constant
+
+#Training parameters
+num_epoch: 30
+epoch_len: 10000
+eval_epoch_len: 1000
+batch_size: 1
+lr: 1e-5
+grad_clip: 0.95
+lr_decay: 0.92
+mu_law: false
+linear_pcm: false 
+classes: 1
+shift_right: false 
+autoencoding: 0
+
+vqvae:
+  input_channels: 1
+  output_channels: 12
+  nb_blocks: 5
+  stride_t: 2
+  transformer:
+    active: true
+  
+encoder:
+  last_kernel_size: 33
+  width: 256
+  depth: 10
+  m_conv: 1.0
+  dilation_growth_rate: 2
+  dilation_cycle: 
+  zero_out: false
+  res_scale: false
+
+decoder:
+  in_channels: 256
+  first_kernel_size: 33
+  width: 256
+  depth: 10
+  m_conv: 1.0
+  dilation_growth_rate: 2
+  dilation_cycle: 
+  zero_out: false
+  res_scale: false
+  upsampling_mode: transpose_conv #interpolate, transpose_conv, pixel_shuffle
+
+codebook:
+  use_bottleneck: true
+  emb_channels: 256
+  nb_bins: 1500
+  mu: 0.99
+
+transformer: 
+  active: false
+  N: 18
+  hidden_dim: 256
+  
+
+# Decoder Melspec
+melspec:
+  active: true
+  lambda_mel: 0.1
+  scale_melspec: false
+  multiple_stft: true 
+  stable: true
+  use_db: true
+  log_scale: false
+  loss: "mix" #"mix" "l1", "mix"
+
+#Discriminator Latent
+discriminator_latent:
+  active: false
+  layers: 3
+  channels: 100
+  p_dropout_discriminator: 0.0 
+  lambda_d: 1e-2
+
+#PostNet
+postnet:
+  active: active
+  n_steps_before_activation: 1
+  input_dim: 1 # 1 if mono 2 if stereo
+  output_dim: 1 # 1 if mono 2 if stereo
+  n_layers: 12
+  n_channels: 128
+  kernel_size: 65
+  stride: 1
+  activation: "mish" # "relu", 'lrelu', 'tanh', 'mish', 'swish'
+  dropout_rate: 0.1
+  push_back_gradients: true
+  lambda_waveform: 1
+  lambda_post: 1.
+  grad_clip: 2.
+  tanh_loss_active: false
+  neg_slope_lrelu: 0.1
+
+#Sampling
+sample_max: false
+
+# Training parameters when using Mixture of Logistics
+mol:
+  active: true
+  n_mols: 12
+  n_classes: 2048
+  num_classes_decay: 1.25
+
+# Mode slurm
+slurm:
+  nodes: 2
+  gpus_per_node: 2  # max 2
+  cpus_per_task: 20
+  mem: 180 # in GiB 48
+  timeout: 72 # hours
+  partition: gpu
+  qos: gpu
+  account: vita
+
+
+  

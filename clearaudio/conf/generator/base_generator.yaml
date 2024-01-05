@@ -1,0 +1,13 @@
+input_path: /songs/sample1.wav  # song or folder
+checkpointpath: /checkpoints/checkpoint_epoch_0.pt
+output_dir: /songs/output/
+
+sample_rate: 44100
+window_clip_duration: 4
+normalize_gain: true
+
+dump_recomposed_file: false
+
+
+
+

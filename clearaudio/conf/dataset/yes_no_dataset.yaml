@@ -1,0 +1,15 @@
+defaults:
+  - base_dataset
+
+name: yesno
+# path_prefix: ~/data/extra
+path_prefix: /home/martorel/dev/data/yes_no
+
+fallback_generated_eqs: false
+ignore_lq_clips: true
+
+high_quality_path: ${dataset.path_prefix}/waves_yesno
+low_quality_path: ${dataset.path_prefix}/waves_yesno_lq
+collated_path: ${dataset.path_prefix}/${dataset.name}_collated.csv
+
+sample_rate: 22050

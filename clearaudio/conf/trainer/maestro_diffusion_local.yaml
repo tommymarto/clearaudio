@@ -1,0 +1,101 @@
+defaults:
+  - base_trainer
+
+name: diffusion_scitas
+type: diffusion
+platform: local
+results_dir: /work/vita/martorel/diffusion/yes_no/results
+log_dir: /work/vita/martorel/diffusion/yes_no/logs
+# checkpoint: /work/vita/martorel/diffusion/yes_no/logs/openai-2023-10-08-18-44-26-290943/model010000.pt
+
+# General
+verbose: true 
+use_clearml: false
+use_wandb: false
+per_epoch: true 
+ml_exp_name: Diffusion_MelSpec
+test_grad: false
+mixed_precision: false
+log_gradient_frequency: 1000
+
+# Data parameters
+training_perc: 0.8
+validation_perc: 0.0
+train_clip_duration: 3
+test_clip_duration: 4
+validation_clip_duration: 3
+
+#Training parameters
+num_epoch: 25
+epoch_len: 10000
+eval_epoch_len: 1000
+batch_size: 4
+lr: 1e-4
+grad_clip: 3.
+lr_decay: 0.94
+mu_law: false
+linear_pcm: false 
+classes: 1
+shift_right: false 
+autoencoding: 0
+latent_d: 128
+
+# Diffusion parameters
+diffusion:
+  # schedule_sampler: 'uniform'
+  diffusion_steps: 1000
+  noise_schedule: 'linear' # 'linear' or 'cosine'
+
+# Model parameters
+model:
+  image_size: 256
+  image_channels: 1
+  num_channels: 128
+  attention_resolutions: "32,16,8"
+  learn_sigma: true
+  num_head_channels: 64
+  resblock_updown: true
+  use_scale_shift_norm: true
+  num_res_blocks: 2
+  
+class_cond: false
+microbatch: -1
+ema_rate: 0.9999
+log_interval: 10
+save_interval: 1000
+weight_decay: 0.0
+lr_anneal_steps: 0
+total_steps: 2000000
+schedule_sampler: "uniform"
+use_fp16: false
+
+audio_mode: "melspectrogram" # "raw", "melspectrogram", "wavelet"
+clip_duration: 5
+
+#Sampling
+sampler:
+  use_ddim: true
+  clip_denoised: false
+
+# Melspectrogram parameters
+melspectrogram:
+  x_res: 256
+  y_res: 256
+  hop_length: 1024
+  sample_rate: 44100
+  n_fft: 2048
+  griffin_lim_iters: 32
+
+sample_max: false
+
+# Mode slurm
+slurm:
+  nodes: 1 # 2
+  gpus_per_node: 2  # max 2
+  cpus_per_task: 4
+  mem: 0 # in GiB 48
+  timeout: 72 # hours
+  partition: gpu
+  qos: gpu
+  account: vita
+  reservation: false

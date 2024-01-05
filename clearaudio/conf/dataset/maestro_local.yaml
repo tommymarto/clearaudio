@@ -1,0 +1,20 @@
+defaults:
+  - base_dataset
+
+name: maestro
+sample_rate: 44100 #22050
+match_sample_rate: false
+
+# Low quality effects
+use_random_effects: true
+max_training_effects: 0  # if we don't use random eqs, 0 means all the EQs defined in the config
+normalize_inputs_post_eq: false
+
+high_quality_path: ~/data/audio/maestro/2018-44k
+low_quality_path: ~/data/audio/maestro/lq/2018
+collated_path: ~/data/audio/maestro/${dataset.name}_collated.csv
+user_lq_suffix: '-ProQ2_01-01'
+
+# collated_path: /home/bastien/EPFL/Projects/VITA/datasets/${dataset.name}_collated.csv
+# high_quality_path: /home/bastien/EPFL/Projects/VITA/datasets/${dataset.name}/hq
+# low_quality_path: /home/bastien/EPFL/Projects/VITA/datasets/${dataset.name}/lq

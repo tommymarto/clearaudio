@@ -1,0 +1,108 @@
+defaults:
+  - base_trainer
+
+name: wavenet_local
+type: wavenet
+platform: local
+results_dir: /home/bastienvandelft/Projects/clearaudio_results
+
+# General
+verbose: true 
+use_clearml: true 
+use_wandb: false
+per_epoch: true 
+ml_exp_name: PostNet_L1Mel_Tanh(L1)
+test_grad: false
+mixed_precision: false
+log_gradient_frequency: 1000
+
+# Data parameters
+training_perc: 0.9
+validation_perc: 0.05
+train_clip_duration: 2
+test_clip_duration: 4
+validation_clip_duration: 3
+
+#Training parameters
+num_epoch: 25
+epoch_len: 10000
+eval_epoch_len: 200
+batch_size: 1
+lr: 1e-4
+grad_clip: 3.
+lr_decay: 0.91
+mu_law: false
+linear_pcm: false 
+classes: 1
+shift_right: false 
+autoencoding: 0
+latent_d: 128
+
+# Training parameters when using Mixture of Logistics
+mol:
+  active: true
+  n_mols: 8
+  n_classes: 2048
+  num_classes_decay: 1.1
+
+# Encoder
+encoder:
+  active: true
+  channels: 128
+  blocks: 4
+  pool: 100
+  final_kernel_size: 1
+  layers: 11
+  func: 'relu'
+
+# Decoder
+decoder:
+  blocks: 4
+  layers: 12
+  kernel_size: 2
+  residual_channels: 128
+  skip_channels: 128
+  causal: false
+  lambda_waveform: 100
+
+# Decoder Melspec
+melspec:
+  active: true
+  lambda_mel: 0.5
+  scale_melspec: false
+  multiple_stft: true 
+  stable: true
+  use_db: true
+  log_scale: false
+
+#Discriminator Latent
+discriminator_latent:
+  active: false
+  layers: 3
+  channels: 100
+  p_dropout_discriminator: 0.0 
+  lambda_d: 1e-2
+
+spec:
+  loss: "l1" #"mix" "l1", "mix"
+
+#PostNet
+postnet:
+  active: true
+  n_steps_before_activation: 1
+  input_dim: 1 # 1 if mono 2 if stereo
+  output_dim: 1 # 1 if mono 2 if stereo
+  n_layers: 12
+  n_channels: 64 
+  kernel_size: 32
+  stride: 1
+  activation: "lrelu" # "relu", 'lrelu', 'tanh'
+  dropout_rate: 0.1
+  push_back_gradients: true
+  lambda_waveform: 2
+  lambda_post: 1.
+  grad_clip: 3.
+  tanh_loss_active: true
+
+#Sampling
+sample_max: false

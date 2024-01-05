@@ -1,0 +1,14 @@
+defaults:
+  - base_generator
+
+input_path: ~/test_data/audio/tanbur/Real_degraded
+checkpointpath: ~/test_data/audio/tanbur/checkpoint_epoch_17.pt
+output_dir: ~/test_data/audio/tanbur/output
+
+sample_rate: 44100
+window_clip_duration: 4
+normalize_gain: true
+
+
+
+

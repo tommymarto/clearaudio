@@ -1,0 +1,13 @@
+defaults:
+  - base_dataset
+
+name: maestro
+high_quality_path: /work/vita/datasets/audio/maestro/maestro_full
+low_quality_path: /work/vita/datasets/audio/maestro/lq
+collated_path: /work/vita/datasets/audio/maestro/${dataset.name}_full_collated.csv
+
+sample_rate: 44100
+mono: false
+
+fallback_generated_eqs: false
+ignore_lq_clips: true

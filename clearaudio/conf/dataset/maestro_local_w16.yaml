@@ -1,0 +1,17 @@
+defaults:
+  - base_dataset
+
+sample_rate: 44100
+match_sample_rate: false
+max_training_effects: 10
+
+name: maestro
+# high_quality_path: ~/data/maestro/2018-44k
+# low_quality_path: ~/data/maestro/lq/2018
+# collated_path: ~/data/maestro/${dataset.name}_collated.csv
+user_lq_suffix: '-ProQ2_01-01'
+
+collated_path: /home/bastienvandelft/Projects/clearaudio_results/${dataset.name}_collated.csv
+
+high_quality_path: /home/bastienvandelft/audio_res/maestro/2018/wav
+low_quality_path: /home/bastienvandelft/audio_res/maestro/lq

@@ -1,0 +1,90 @@
+defaults:
+  - base_trainer
+
+name: diffusion_scitas
+type: diffusion
+platform: local
+results_dir: /work/vita/martorel/diffusion/yes_no/results
+log_dir: /work/vita/martorel/diffusion/yes_no/logs
+
+# General
+verbose: true 
+use_clearml: false
+use_wandb: false
+per_epoch: true 
+ml_exp_name: Diffusion_MelSpec
+test_grad: false
+mixed_precision: false
+log_gradient_frequency: 1000
+
+
+# Data parameters
+training_perc: 0.8
+validation_perc: 0.0
+train_clip_duration: 3
+test_clip_duration: 4
+validation_clip_duration: 3
+
+#Training parameters
+num_epoch: 25
+epoch_len: 10000
+eval_epoch_len: 1000
+batch_size: 1
+lr: 1e-4
+grad_clip: 3.
+lr_decay: 0.94
+mu_law: false
+linear_pcm: false 
+classes: 1
+shift_right: false 
+autoencoding: 0
+latent_d: 128
+
+# Diffusion parameters
+diffusion:
+  # schedule_sampler: 'uniform'
+  diffusion_steps: 4000
+  noise_schedule: 'linear' # 'linear' or 'cosine'
+
+# Model parameters
+model:
+  attention_resolutions: 32,16,8
+  class_cond: False
+  diffusion_steps: 1000
+  image_size: 256
+  learn_sigma: True
+  noise_schedule: "linear"
+  num_channels: 256
+  num_head_channels: 64
+  num_res_blocks: 2
+  resblock_updown: True
+  use_fp16: True
+  use_scale_shift_norm: True
+  
+class_cond: false
+microbatch: -1
+ema_rate: 0.9999
+log_interval: 1
+save_interval: 100
+weight_decay: 0.0
+lr_anneal_steps: 0
+schedule_sampler: "uniform"
+
+#Sampling
+sampler:
+  use_ddim: false
+  clip_denoised: false
+
+sample_max: false
+
+# Mode slurm
+slurm:
+  nodes: 1 # 2
+  gpus_per_node: 2  # max 2
+  cpus_per_task: 4
+  mem: 0 # in GiB 48
+  timeout: 72 # hours
+  partition: gpu
+  qos: gpu
+  account: vita
+  reservation: false

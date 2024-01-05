@@ -1,0 +1,17 @@
+defaults:
+  - dataset: ???
+  - trainer: base_trainer
+  - generator: base_generator
+  # - override hydra/job_logging: custom
+  # - override hydra/help: clearaudio_help
+  - _self_
+
+
+hydra:
+  searchpath:
+    - pkg://clearaudio/additional_conf
+  # sweep:
+    # dir: ${collated_output_dir}
+  #   subdir: ${hydra.job.num}
+  run:
+    dir: ${trainer.output_dir}/${trainer.sync_key}

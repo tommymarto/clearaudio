@@ -1,0 +1,34 @@
+defaults:
+  - low_quality_effect/train
+  - low_quality_effect/test
+  - low_quality_effect/validation
+  - low_quality_effect/random
+
+name: generic_dataset
+mode: audio
+
+audio_format: wav
+sample_rate: 44100
+match_sample_rate: true # If False, import all audio file irrelevant of sample rate
+mono: true
+
+collated_path: /datasets/${dataset.name}_collated.csv
+use_collated_file: true  # read from collated path if true, otherwise build it
+high_quality_path: /datasets/${dataset.name}/hq
+low_quality_path: /datasets/${dataset.name}/lq
+
+use_user_lq_files: false  # if false generates LQ files from set of equalizers
+fallback_generated_eqs: true  # if can't match HQ file, default is true
+ignore_lq_clips: false  # if true, ignore if LQ clip is not found or generated
+user_lq_suffix: '_test_eq'
+
+# Low quality effects
+use_random_effects: true
+max_training_effects: 0  # if we don't use random eqs, 0 means all the EQs defined in the config
+normalize_inputs_post_eq: false
+
+# If generated from EQ
+persist_low_quality_files: false
+force_overwrite_lq_files: false
+
+

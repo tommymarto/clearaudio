@@ -1,0 +1,31 @@
+# @package dataset.low_quality_effect.random
+#### IF mode random
+random_effects:
+  max_effect: 8
+  min_effect: 3
+
+equalizer:
+  proba: 0.7
+  freq_mean: 2000
+  freq_std: 1000
+  db_min: 15
+  db_max: 32
+
+bass:
+  proba: 0.5
+  freq_min: 25
+  freq_max: 1000
+  db_min: 15
+  db_max: 32
+
+treble:
+  proba: 0.5
+  freq_min: 3000
+  freq_max: 8000
+  db_min: 15
+  db_max: 32
+
+overdrive:
+  proba: 0.3
+  min_int: 1
+  max_int: 7
